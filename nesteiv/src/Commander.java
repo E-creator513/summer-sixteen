@@ -3,7 +3,7 @@ import data.Flat;
 import java.util.*;
 
 /**
- * @author Ivan Nesterov
+ * 
  * @version 1.0
  * Method for handling user`s command
  */
