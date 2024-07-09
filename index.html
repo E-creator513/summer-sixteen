@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Information</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Product Information Fetcher</h1>
+    <input type="text" id="product_id" placeholder="Enter Product ID">
+    <button id="fetchBtn">Fetch Product Info</button>
+    <div id="results"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#fetchBtn').click(function() {
+                var productId = $('#product_id').val();
+                $.ajax({
+                    url: '/get-product-info',
+                    type: 'GET',
+                    data: {product_id: productId},
+                    success: function(data) {
+                        if(data.error) {
+                            $('#results').html(`<p>Error: ${data.error}</p>`);
+                        } else {
+                            var table = '<table border="1"><tr>';
+                            for (var key in data) {
+                                table += `<th>${key}</th>`;
+                            }
+                            table += '</tr><tr>';
+                            for (var key in data) {
+                                table += `<td>${data[key]}</td>`;
+                            }
+                            table += '</tr></table>';
+                            $('#results').html(table);
+                        }
+                    },
+                    error: function() {
+                        $('#results').html('<p>An error occurred while fetching data.</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
